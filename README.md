@@ -32,6 +32,7 @@ Mapas Culturais é uma aplicação web server-side baseada em linguagem PHP e ba
 * [Cultural Magazine Theme](https://github.com/hacklabr/cultural)
 
 ### Documentação 
+<<<<<<< HEAD
 Toda documentação da aplicação está na pasta [documentation](documentation). Principais referências: 
 - [Deploy](documentation/docs/mc_deploy.md)
 - [API](documentation/docs/mc_config_api.md)
