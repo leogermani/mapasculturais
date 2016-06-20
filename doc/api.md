@@ -439,6 +439,31 @@ $.getJSON(
       "label":"Distrito",
       "isMetadata":true,
       "isEntityRelation":false
+   },
+   "validPeriod":{
+      "required":false,
+      "type":"smallint",
+      "length":null,
+      "private":false,
+      "label":"Duração",
+      "isMetadata":true,
+      "isEntityRelation":false
+   },
+   "timeUnit":{
+      "required":false,
+      "type":"smallint",
+      "length":null,
+      "private":false,
+      "label":"Periodicidade",
+      "isMetadata":true,
+      "options":{
+         "0":"Infinita",
+         "1":"Dias",
+         "2":"Semanas",
+         "3":"Meses",
+         "4":"Anos"
+      },
+      "isEntityRelation":false
    }
 }
 ```

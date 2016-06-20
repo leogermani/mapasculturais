@@ -8,6 +8,7 @@ return array(
     'Space' => 'Espaço',
     'Event' => 'Evento',
     'Project' => 'Projeto',
+	'Seal' => 'Selo',
     'no files uploaded' => 'nenhum arquivo foi enviado',
     'The uploaded file is not a valid image.' => 'O arquivo enviado não é uma imagem válida.',
     'The uploaded file is not a valid document.' => 'O arquivo enviado não é um documento válido.',
