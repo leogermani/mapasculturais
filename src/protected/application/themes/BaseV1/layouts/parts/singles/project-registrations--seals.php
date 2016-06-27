@@ -21,7 +21,7 @@
 					        </div>
 					    </div>
 					</edit-box>
-					<div ng-if="entity.registrationSeals.owner" class="avatar-seal-registration ng-scope">
+					<div ng-if="entity.registrationSeals.owner" class="avatar-seal">
 						<img ng-src="{{avatarUrl(seals[getArrIndexBySealId(entity.registrationSeals.owner)]['@files:avatar.avatarMedium'].url)}}">
 		                <div class="descricao-do-selo">
 		                    <h1><a href="{{seals[getArrIndexBySealId(entity.registrationSeals.owner)].singleUrl}}" class="ng-binding">{{seals[getArrIndexBySealId(registrationSeals.owner)].name}}</a></h1>
@@ -51,7 +51,7 @@
 					        </div>
 					    </div>
 					</edit-box>
-					<div ng-if="entity.registrationSeals.institution" class="avatar-seal-registration ng-scope">
+					<div ng-if="entity.registrationSeals.institution" class="avatar-seal">
 						<img ng-src="{{avatarUrl(seals[getArrIndexBySealId(entity.registrationSeals.institution)]['@files:avatar.avatarMedium'].url)}}">
 		                <div class="descricao-do-selo">
 		                    <h1><a href="{{seals[getArrIndexBySealId(entity.registrationSeals.institution)].singleUrl}}" class="ng-binding">{{seals[getArrIndexBySealId(registrationSeals.institution)].name}}</a></h1>
@@ -81,7 +81,7 @@
 					        </div>
 					    </div>
 					</edit-box>
-	            	<div ng-if="entity.registrationSeals.collective" class="avatar-seal-registration ng-scope">
+	            	<div ng-if="entity.registrationSeals.collective" class="avatar-seal">
 						<img ng-src="{{avatarUrl(seals[getArrIndexBySealId(entity.registrationSeals.collective)]['@files:avatar.avatarMedium'].url)}}">
 		                <div class="descricao-do-selo">
 		                    <h1><a href="{{seals[getArrIndexBySealId(entity.registrationSeals.collective)].singleUrl}}" class="ng-binding">{{seals[getArrIndexBySealId(registrationSeals.collective)].name}}</a></h1>

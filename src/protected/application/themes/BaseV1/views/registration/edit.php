@@ -24,90 +24,21 @@ $this->addSealsToJs(false,[$owner,$institution,$collective]);
 <?php $this->part('editable-entity', array('entity'=>$entity, 'action'=>$action));  ?>
 
 <article class="main-content registration" ng-controller="ProjectController">
-    <header class="main-content-header">
-        <div
-            <?php if($header = $project->getFile('header')): ?>
-                class="header-image"
-                style="background-image: url(<?php echo $header->transform('header')->url; ?>);"
-            <?php endif; ?>
-        >
-        </div>
-        <!--.header-image-->
-        <div class="header-content">
-        <?php if($avatar = $project->avatar): ?>
-            <div class="avatar com-imagem">
-                <img src="<?php echo $avatar->transform('avatarBig')->url; ?>" alt="" class="js-avatar-img" />
-        <?php else: ?>
-            <div class="avatar">
-                <img class="js-avatar-img" src="<?php $this->asset('img/avatar--project.png'); ?>" />
-        <?php endif; ?>
-            <!-- pro responsivo!!! -->
-            <?php if($project->isVerified): ?>
-                <a class="verified-seal hltip active" title="Este projeto é verificado." href="#"></a>
-            <?php endif; ?>
-            </div>
-            <!--.avatar-->
-            <div class="entity-type registration-type">
-                <div class="icon icon-project"></div>
-                <a><?php echo $project->type->name; ?></a>
-            </div>
-            <!--.entity-type-->
-            <h2><a href="<?php echo $project->singleUrl ?>"><?php echo $project->name; ?></a></h2>
-        </div>
-    </header>
-    <h3 class="registration-header">Formulário de Inscrição</h3>
-    <p class="registration-help">Itens com asterisco são obrigatórios.</p>
-    <div class="registration-fieldset">
-        <h4>Número da Inscrição</h4>
-        <div class="registration-id">
-            <?php if($action !== 'create'): ?><?php echo $entity->number ?><?php endif; ?>
-        </div>
-    </div>
-    <?php if($project->registrationCategories): ?>
-        <div class="registration-fieldset">
-            <!-- selecionar categoria -->
-            <h4><?php echo $project->registrationCategTitle ?></h4>
-            <p class="registration-help"><?php echo $project->registrationCategDescription ?></p>
-            <p>
-                <span class='js-editable-registrationCategory' data-original-title="Opção" data-emptytext="Selecione uma opção" data-value="<?php echo htmlentities($entity->category) ?>"><?php echo $entity->category ?></span>
-            </p>
-        </div>
-    <?php endif; ?>
-    <div class="registration-fieldset">
-        <h4>Agentes (proponentes)</h4>
-        <p class="registration-help">Relacione os agentes responsáveis pela inscrição.</p>
-        <!-- agentes relacionados a inscricao -->
-        <ul class="registration-list">
-            <input type="hidden" id="ownerId" name="ownerId" class="js-editable" data-edit="ownerId"/>
-            <li ng-repeat="def in data.entity.registrationAgents" ng-if="def.use != 'dontUse'" class="registration-list-item registration-edit-mode">
-                <div class="registration-label">{{def.label}} <span ng-if="def.use === 'required'" class="required">*</span></div>
-                <div class="registration-description">{{def.description}}</div>
+    <?php $this->part('singles/registration--header', $_params); ?>
+    
+    <article>
+        <?php $this->applyTemplateHook('form','begin'); ?>
+        
+        <?php $this->part('singles/registration-edit--header', $_params) ?>
+        
+        <?php $this->part('singles/registration-edit--categories', $_params) ?>
+        
+        <?php $this->part('singles/registration-edit--agents', $_params) ?>
+        
+        <?php $this->part('singles/registration-edit--fields', $_params) ?>
+        
+        <?php $this->part('singles/registration-edit--send-button', $_params) ?>
 
-                <div id="registration-agent-{{def.agentRelationGroupName}}" class="js-registration-agent registration-agent" ng-class="{pending: def.relationStatus < 0}">
-                    <p ng-if="def.relationStatus < 0" class="alert warning" style="display:block !important /* está oculto no scss */" >Aguardando confirmação</p>
-                    <div class="clearfix">
-                        <img ng-src="{{def.agent.avatarUrl || data.assets.avatarAgent}}" class="registration-agent-avatar" />
-                        <div>
-                            <a ng-if="def.agent" href="{{def.agent.singleUrl}}">{{def.agent.name}}</a>
-                            <span ng-if="!def.agent">Não informado</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div ng-if="data.isEditable" class="btn-group">
-                    <span ng-if="def.agent">
-                        <a class="btn btn-default edit hltip" ng-click="openEditBox('editbox-select-registration-' + def.agentRelationGroupName, $event)" title="Editar {{def.label}}">Trocar agente</a>
-                        <a class="btn btn-default delete hltip" ng-if="def.agentRelationGroupName != 'owner' && def.use != 'required'" ng-click="unsetRegistrationAgent(def.agent.id, def.agentRelationGroupName)" title="Excluir {{def.label}}">Excluir</a>
-                    </span>
-                    <a class="btn btn-default add hltip" ng-if="!def.agent" ng-click="openEditBox('editbox-select-registration-' + def.agentRelationGroupName, $event)" title="Adicionar {{def.label}}">Adicionar</a>
-                </div>
-
-                <edit-box id="editbox-select-registration-{{def.agentRelationGroupName}}" position="left" title="Selecionar {{def.label}}" cancel-label="Cancelar" close-on-cancel='true' spinner-condition="data.registrationSpinner">
-                    <find-entity id='find-entity-registration-{{def.agentRelationGroupName}}' name='{{def.agentRelationGroupName}}' api-query="data.relationApiQuery[def.agentRelationGroupName]" entity="agent" no-results-text="Nenhum agente encontrado" select="setRegistrationAgent" spinner-condition="data.registrationSpinner"></find-entity>
-                </edit-box>
-            </li>
-        </ul>
-    </div>
  	<!-- BEGIN Seals -->
 	<div id="registration-agent" class="registration-fieldset">
 		<h4>5. Selos Certificadores</h4>
@@ -234,7 +165,5 @@ $this->addSealsToJs(false,[$owner,$institution,$collective]);
         <?php endif ?>
     </div>
 </article>
-<div class="sidebar-left sidebar registration">
-</div>
-<div class="sidebar registration sidebar-right">
-</div>
+<?php $this->part('singles/registration--sidebar--left', $_params) ?>
+<?php $this->part('singles/registration--sidebar--right', $_params) ?>
