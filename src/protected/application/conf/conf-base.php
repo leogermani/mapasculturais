@@ -49,10 +49,11 @@ return array(
     'app.enabled.spaces'   => true,
     'app.enabled.projects' => true,
     'app.enabled.events'   => true,
+	'app.enabled.seals'   => true,
     'app.enabled.apps'     => true,
 
     'themes.active' => 'MapasCulturais\Themes\BaseV1',
-    'themes.active.debugParts' => false,
+    'themes.active.debugParts' => true,
     'themes.assetManager' => new \MapasCulturais\AssetManagers\FileSystem(array(
         'publishPath' => BASE_PATH . $asset_dir,
 
@@ -145,6 +146,8 @@ return array(
             'requiredProperties' => array('dataDeNascimento', 'emailPrivado')
         )
     ),
+
+    'notifications.interval' => 60,
 
     /* ==================== LOG ================== */
     // write log messages to a custom output (the class must implement the method "public write(mixed $message, int $level)")
@@ -255,6 +258,7 @@ return array(
             'agente'    => array('agent',   'single'),
             'espaco'    => array('space',   'single'),
             'projeto'   => array('project', 'single'),
+        	'selo'  	=> array('seal',	'single'),
             'sair'      => array('auth',    'logout'),
             'busca'     => array('site',    'search'),
             'sobre'     => array('site',    'page', array('sobre')),
@@ -264,6 +268,7 @@ return array(
             'aprovar-notificacao' => array('notification', 'approve'),
             'rejeitar-notificacao' => array('notification', 'reject'),
             'inscricao' => array('registration', 'view'),
+        	'certificado' => array('relatedSeal','single'),
         ),
         'controllers' => array(
             'painel'         => 'panel',
@@ -274,8 +279,9 @@ return array(
             'espacos'        => 'space',
             'arquivos'       => 'file',
             'projetos'       => 'project',
+        	'selos'      	 => 'seal',
             'inscricoes'     => 'registration',
-            'anexos'         => 'registrationfileconfiguration'
+            'anexos'         => 'registrationfileconfiguration',
         ),
         'actions' => array(
             'lista'         => 'list',
@@ -285,6 +291,7 @@ return array(
             'agentes'       => 'agents',
             'eventos'       => 'events',
             'projetos'      => 'projects',
+        	'selos'      	=> 'seals',
             'inscricoes'    => 'registrations'
         ),
 
@@ -296,6 +303,7 @@ return array(
                 'event'         => 'Evento',    'events'        => 'Eventos',
                 'agent'         => 'Agente',    'agents'        => 'Agentes',
                 'space'         => 'Espaço',    'spaces'        => 'Espaços',
+        		'seal'       	=> 'Selo',   	'seals'      	=> 'Selos',
                 'project'       => 'Projeto',   'projects'      => 'Projetos',
                 'registration'  => 'Inscrição', 'registrations' => 'Inscrições',
                 'file'          => 'Arquivo',   'files'         => 'Arquivos',
