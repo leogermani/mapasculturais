@@ -81,10 +81,14 @@ trait EntityMetadata{
      * @return mixed The metadata value.
      */
     function __metadata__get($name){
-        if($this->getRegisteredMetadata($name)){
-            return $this->getMetadata($name);
-        }
-
+		if($def = $this->getRegisteredMetadata($name)){
+			$value = $this->getMetadata($name);
+			  
+			if(is_callable($def->unserialize)){
+				$cb = $def->unserialize;
+				$value = $cb($value);
+		}
+		return $value;
     }
 
 
@@ -93,11 +97,15 @@ trait EntityMetadata{
      * otherwise.
      */
     function __metadata__set($name, $value){
-
-        if($this->getRegisteredMetadata($name)){
-            $this->setMetadata($name, $value);
-            return true;
-        }
+    	
+	if($def = $this->getRegisteredMetadata($name)){
+		if(is_callable($def->serialize)){
+			$cb = $def->serialize;
+			$value = $cb($value);
+		}
+    			 
+		$this->setMetadata($name, $value);
+		return true;
     }
 
     /**

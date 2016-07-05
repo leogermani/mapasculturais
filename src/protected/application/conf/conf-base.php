@@ -146,26 +146,6 @@ return array(
         )
     ),
 
-    /* ============ ENTITY PROPERTIES LABELS ============= */
-    'app.entityPropertiesLabels' => array(
-        '@default' => array(
-            'id' => 'Id',
-            'name' => 'Nome',
-            'createTimestamp' => 'Data de Criação',
-            'shortDescription' => 'Descrição Curta',
-            'longDescription' => 'Descrição Longa',
-            'status' => 'Status',
-            'location' => 'Coordenada Geográfica',
-            '_type' => 'Tipo'
-        ),
-
-//        'MapasCulturais\Entities\Agent' => array()
-    ),
-
-
-    // 'app.projectRegistrationAgentRelationGroupName' => "Inscrições",
-
-
     /* ==================== LOG ================== */
     // write log messages to a custom output (the class must implement the method "public write(mixed $message, int $level)")
     //'slim.log.writer' => new \Custom\Log\Writer(),
