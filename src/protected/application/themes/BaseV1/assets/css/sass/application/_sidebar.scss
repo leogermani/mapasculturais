@@ -15,6 +15,7 @@
         margin-right: .75rem;
         background-size: cover;
     }
+    
     &:before {
         left: 50%;
         margin-left: -8px;
@@ -119,6 +120,7 @@ body.action-single {
         color: $brand-project;
     }
 }
+
 .sidebar.registration {
     @extend .sidebar.project;
 }

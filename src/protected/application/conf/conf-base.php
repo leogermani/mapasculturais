@@ -146,24 +146,19 @@ return array(
         )
     ),
 
-    /* ============ ENTITY PROPERTIES LABELS ============= */
+         /* ============ ENTITY PROPERTIES LABELS ============= */
     'app.entityPropertiesLabels' => array(
         '@default' => array(
             'id' => 'Id',
             'name' => 'Nome',
-            'createTimestamp' => 'Data de Criação',
-            'shortDescription' => 'Descrição Curta',
-            'longDescription' => 'Descrição Longa',
+            'createTimestamp' => 'Data de Cria<C3><A7><C3><A3>o',
+            'shortDescription' => 'Descri<C3><A7><C3><A3>o Curta',
+            'longDescription' => 'Descri<C3><A7><C3><A3>o Longa',
             'status' => 'Status',
-            'location' => 'Coordenada Geográfica',
+            'location' => 'Coordenada Geogr<C3><A1>fica',
             '_type' => 'Tipo'
         ),
-
-//        'MapasCulturais\Entities\Agent' => array()
     ),
-
-
-    // 'app.projectRegistrationAgentRelationGroupName' => "Inscrições",
 
     'notifications.interval' => 60,
 
@@ -284,7 +279,7 @@ return array(
             // workflow actions
             'aprovar-notificacao' => array('notification', 'approve'),
             'rejeitar-notificacao' => array('notification', 'reject'),
-            'inscricao' => array('registration', 'view'),
+            'inscricao' => array('registration', 'view')
         ),
         'controllers' => array(
             'painel'         => 'panel',

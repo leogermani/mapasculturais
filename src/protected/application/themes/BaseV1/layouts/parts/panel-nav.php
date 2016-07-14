@@ -20,7 +20,7 @@
             <li><a <?php if($this->template == 'panel/spaces') echo 'class="active"'; ?> href="<?php echo $app->createUrl('panel', 'spaces') ?>"><span class="icon icon-space"></span> <?php $this->dict('entities: My Spaces') ?></a></li>
             <?php $this->applyTemplateHook('nav.panel.spaces','after'); ?>
         <?php endif; ?>
-            
+        
         <?php if($app->isEnabled('projects')): ?>
             <?php $this->applyTemplateHook('nav.panel.projects','before'); ?>
             <li><a <?php if($this->template == 'panel/projects') echo 'class="active"'; ?> href="<?php echo $app->createUrl('panel', 'projects') ?>"><span class="icon icon-project"></span> Meus Projetos</a></li>

@@ -90,7 +90,6 @@ trait EntityMetadata{
             }
             return $value;
         }
-
     }
 
 
@@ -99,7 +98,6 @@ trait EntityMetadata{
      * otherwise.
      */
     function __metadata__set($name, $value){
-
         if($def = $this->getRegisteredMetadata($name)){
             if(is_callable($def->serialize)){
                 $cb = $def->serialize;

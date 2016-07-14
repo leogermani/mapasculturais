@@ -535,8 +535,6 @@ module.controller('RegistrationConfigurationsController', ['$scope', '$rootScope
             });
         };
 
-
-
         $scope.eventFilterTimeout = null;
 
         $scope.filterEvents = function(){
@@ -1150,5 +1148,5 @@ module.controller('RegistrationConfigurationsController', ['$scope', '$rootScope
                         alert('erro');
                     });
             };
-        }]);
+    }]);
 })(angular);

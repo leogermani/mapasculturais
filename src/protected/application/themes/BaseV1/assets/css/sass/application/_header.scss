@@ -270,7 +270,7 @@ body.action-search {
 #entities-menu-project {
     &.active, &:hover {
         border-top-color: $brand-project;
-        color: $brand-event;
+        color: $brand-project;
         a {
             color: $brand-project;
         }

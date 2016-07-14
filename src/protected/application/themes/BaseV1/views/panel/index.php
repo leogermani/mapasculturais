@@ -1,5 +1,5 @@
 <?php
-$this->layout = 'panel'
+$this->layout = 'panel';
 ?>
 <div class="panel-main-content">
 

@@ -284,9 +284,6 @@ class App extends \Slim\Slim{
         // annotation driver
         $doctrine_config = Setup::createConfiguration($config['doctrine.isDev']);
 
-        $classLoader = new \Doctrine\Common\ClassLoader('Entities', __DIR__);
-        $classLoader->register();
-
         $driver = new AnnotationDriver(new AnnotationReader());
 
         $driver->addPaths([__DIR__ . '/Entities/']);
@@ -530,7 +527,7 @@ class App extends \Slim\Slim{
             $project_types = include APPLICATION_PATH.'/conf/project-types.php';
         }
         $projects_meta = key_exists('metadata', $project_types) && is_array($project_types['metadata']) ? $project_types['metadata'] : [];
-
+        
         // register auth providers
         // @TODO veridicar se isto está sendo usado, se não remover
         $this->registerAuthProvider('OpenID');
@@ -550,6 +547,7 @@ class App extends \Slim\Slim{
         $this->registerController('agent',   'MapasCulturais\Controllers\Agent');
         $this->registerController('space',   'MapasCulturais\Controllers\Space');
         $this->registerController('project', 'MapasCulturais\Controllers\Project');
+        
 
         $this->registerController('app',   'MapasCulturais\Controllers\UserApp');
 
@@ -656,13 +654,13 @@ class App extends \Slim\Slim{
         $this->registerFileGroup('event', $file_groups['avatar']);
         $this->registerFileGroup('event', $file_groups['downloads']);
         $this->registerFileGroup('event', $file_groups['gallery']);
-
+        
         $this->registerFileGroup('project', $file_groups['header']);
         $this->registerFileGroup('project', $file_groups['avatar']);
         $this->registerFileGroup('project', $file_groups['downloads']);
         $this->registerFileGroup('project', $file_groups['gallery']);
         $this->registerFileGroup('project', $file_groups['rules']);
-
+        
         $this->registerFileGroup('registrationFileConfiguration', $file_groups['registrationFileConfiguration']);
 
         $image_transformations = include APPLICATION_PATH.'/conf/image-transformations.php';
@@ -727,7 +725,7 @@ class App extends \Slim\Slim{
 
         $this->registerMetaListGroup('project', $metalist_groups['links']);
         $this->registerMetaListGroup('project', $metalist_groups['videos']);
-
+        
         // register space types and spaces metadata
         foreach($space_types['items'] as $group_name => $group_config){
             $entity_class = 'MapasCulturais\Entities\Space';

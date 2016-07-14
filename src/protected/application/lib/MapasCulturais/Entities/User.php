@@ -91,7 +91,7 @@ class User extends \MapasCulturais\Entity implements \MapasCulturais\UserInterfa
      * @ORM\OrderBy({"createTimestamp" = "ASC"})
      */
     protected $agents;
-
+    
     /**
      * @var \MapasCulturais\Entities\Agent
      *
@@ -220,23 +220,38 @@ class User extends \MapasCulturais\Entity implements \MapasCulturais\UserInterfa
 
     protected function _getEntitiesByStatus($entityClassName, $status = 0, $status_operator = '>'){
         
-        $dql = "
-            SELECT
-                e, m, tr
-            FROM
-                $entityClassName e
-                LEFT JOIN e.__metadata m
-                LEFT JOIN e.__termRelations tr
-                JOIN e.owner a
-            WHERE
-                e.status $status_operator :status AND
-                a.user = :user
-            ORDER BY
-                e.name,
-                e.createTimestamp ASC
-        ";
-        $query = App::i()->em->createQuery($dql);
-
+    	if ($entityClassName::usesTaxonomies()) {
+    		$dql = "
+	    		SELECT
+	    			e, m, tr
+	    		FROM
+	    			$entityClassName e
+	    			JOIN e.owner a
+	    			LEFT JOIN e.__metadata m
+	    			LEFT JOIN e.__termRelations tr
+	    		WHERE
+	    			e.status $status_operator :status AND
+	    			a.user = :user
+	    		ORDER BY
+	    			e.name,
+	    			e.createTimestamp ASC ";
+    	} else {
+    		$dql = "
+    			SELECT
+   		 			e, m
+    			FROM
+    				$entityClassName e
+		    		JOIN e.owner a
+		    		LEFT JOIN e.__metadata m
+	    		WHERE
+		    		e.status $status_operator :status AND
+		    		a.user = :user
+	    		ORDER BY
+		    		e.name,
+		    		e.createTimestamp ASC ";
+    	}
+    	
+		$query = App::i()->em->createQuery($dql);
         $query->setParameter('user', $this);
         $query->setParameter('status', $status);
 
@@ -344,7 +359,7 @@ class User extends \MapasCulturais\Entity implements \MapasCulturais\UserInterfa
 
         return $this->_getEntitiesByStatus(__NAMESPACE__ . '\Project', Project::STATUS_DISABLED, '=');
     }
-
+    
     function getNotifications($status = null){
         if(is_null($status)){
             $status_operator =  '>';

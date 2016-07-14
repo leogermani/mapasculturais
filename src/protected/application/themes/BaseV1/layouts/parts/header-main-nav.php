@@ -160,7 +160,7 @@
                         </li>
                         <?php $this->applyTemplateHook('nav.dropdown.spaces','after'); ?>
                     <?php endif; ?>
-                        
+                   
                     <?php if($app->isEnabled('projects')): ?>
                         <?php $this->applyTemplateHook('nav.dropdown.projects','before'); ?>
                         <li>
@@ -175,6 +175,7 @@
                         </li>
                         <?php $this->applyTemplateHook('nav.dropdown.registrations','after'); ?>
                     <?php endif; ?>
+                    
                         
                     <li class="row"></li>
                     <!--<li><a href="#">Ajuda</a></li>-->

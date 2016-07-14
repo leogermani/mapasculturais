@@ -48,8 +48,7 @@ return array(
             'validations' => array(
                 "v::url('plus.google.com')" => "A url informada é inválida."
             )
-        ),
-
+        )
     ),
     'items' => array(
         1 =>  array( 'name' => "Festival"),
