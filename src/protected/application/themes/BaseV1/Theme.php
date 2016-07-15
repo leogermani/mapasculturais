@@ -629,6 +629,15 @@ class Theme extends MapasCulturais\Theme {
             $this->jsObject['advancedFilters'] = $this->_getAdvancedFilters();
         }
     }
+	
+    protected function _getAdvancedFilters(){
+        return [
+            'space' => [],
+            'agent' => [],
+            'event' => [],
+            'project' => []
+        ];
+    }
 
     function addEntityToJs(MapasCulturais\Entity $entity){
         $this->jsObject['entity'] = [

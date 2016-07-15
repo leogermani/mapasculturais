@@ -55,4 +55,4 @@
         <!--.filter-->
     </div>
 </div>
-<!--#filter-events-->
+<!--filter-events-->

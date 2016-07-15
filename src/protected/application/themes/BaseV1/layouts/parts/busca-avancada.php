@@ -26,7 +26,7 @@
                 </form>
             </div>
         </div>
-        <!--#search-tools-->
+        <!--search-tools-->
         <div id="search-results">
             <span ng-show="spinnerCount > 0">
                 <img src="<?php $this->asset('img/spinner.gif') ?>" />
@@ -64,7 +64,7 @@
 
             <span ng-if="data.global.viewMode === 'list'" ng-show="spinnerCount===0 && numEventsInList == 0 || !showFilters('event') && (numAgents == 0 || !showFilters('agent')) && (numSpaces == 0 || !showFilters('space')) && (numProjects == 0 || !showFilters('project'))">Nenhum resultado encontrado</span>
         </div>
-        <!--#search-results-->
+        <!--search-results-->
         <div id="selected-filters">
             <a class="tag-selected tag-event" ng-if="showFilters('event') && data.event.keyword !== ''" ng-click="data.event.keyword = ''">{{ data.event.keyword}}</a>
             <a class="tag-selected tag-agent" ng-if="showFilters('agent') && data.agent.keyword !== ''" ng-click="data.agent.keyword = ''">{{ data.agent.keyword}}</a>
@@ -99,6 +99,6 @@
             <a class="tag-selected tag-clear" ng-if="hasFilter()" ng-click="cleanAllFilters()">Remover todos filtros</a>
         </div>
     </div>
-    <!--#header-search-results-->
+    <!--header-search-results-->
 </div>
-<!--#header-search-row-->
+<!--header-search-row-->

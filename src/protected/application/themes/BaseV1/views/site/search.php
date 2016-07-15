@@ -30,7 +30,7 @@ $this->includeMapAssets();
         <a id="near-me" class="control-infobox-open hltip btn-map" ng-click="filterNeighborhood()" title="Buscar somente resultados próximos a mim."></a>
         <!--<a class="btn btn-primary hltip" href="#" ng-click="drawCircle()" title="Buscar somente resultados em uma área delimitada">delimitar área</a>-->
     </div>
-    <!--#filtro-local-->
+    <!--filtro-local-->
     <div id="mc-entity-layers" class="js-leaflet-control" data-leaflet-target=".leaflet-bottom.leaflet-right" ng-show="data.global.viewMode ==='map'">
         <div class="label">Mostrar:</div>
         <div>
@@ -136,10 +136,10 @@ $this->includeMapAssets();
                 </div>
             </article>
         </div>
-    </div><!--#infobox-->
+    </div><!--infobox-->
 
     <div id="search-map-container" ng-controller="SearchMapController" ng-show="data.global.viewMode!=='list'" ng-animate="{show:'animate-show', hide:'animate-hide'}" class="js-map" data-options='{"dragging":true, "zoomControl":true, "doubleClickZoom":true, "scrollWheelZoom":true }'>
-    </div><!--#search-map-container-->
+    </div><!--search-map-container-->
 
 <!-- Here ends the map view and starts the list view -->
     <div id="lista" ng-show="data.global.viewMode==='list'" ng-animate="{show:'animate-show', hide:'animate-hide'}">
@@ -264,8 +264,7 @@ $this->includeMapAssets();
                 </div>
             </article>
         </div>
-    	
-    	<header id="agent-list-header" class="entity-list-header clearfix" ng-show="data.global.filterEntity == 'agent'">
+	<header id="agent-list-header" class="entity-list-header clearfix" ng-show="data.global.filterEntity == 'agent'">
             <h1><span class="icon icon-agent"></span> Agentes</h1>
             <a class="btn btn-accent add" href="<?php echo $app->createUrl('agent', 'create'); ?>">Adicionar agente</a>
         </header>

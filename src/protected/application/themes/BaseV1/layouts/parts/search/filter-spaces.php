@@ -4,7 +4,7 @@
         <?php $this->dict('entities: Spaces') ?>
         <a class="icon icon-show-advanced-search" ng-click="toggleAdvancedFilters()"></a>
     </header>
-    <div class="simple-filters" ng-show="showSearch()">
+    <div class="simple-filters">
         <form class="form-palavra-chave filter search-filter--keyword">
             <label for="palavra-chave-espaco">Palavra-chave</label>
             <input ng-model="data.space.keyword" class="search-field" type="text" name="palavra-chave-espaco" placeholder="Buscar <?php $this->dict('entities: spaces') ?>" />
@@ -49,10 +49,10 @@
         </div>
         <!-- div.verified-filter -->
         
-        <div ng-repeat="entity in ['space']" class="show-advanced-filters ">
+        <div ng-repeat="entity in ['space']" class="show-advanced-filters " ng-show="showSearch()">
             <?php $this->part('search/advanced-filters') ?>
         </div>
         <!--.filter-->
     </div>
 </div>
-<!--#filter-spaces-->
+<!--filter-spaces-->
