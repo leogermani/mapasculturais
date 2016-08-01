@@ -25,6 +25,7 @@ A plataforma já está em uso em diversos municipios, estados, no governo federa
 
 ## Sobre a aplicação
 <<<<<<< HEAD
+<<<<<<< HEAD
 Mapas Culturais é uma aplicação web server-side baseada em linguagem PHP e banco de dados Postgres, entre outras tecnologias e componentes, que propicia um ambiente virtual para mapeamento, divulgação e gestão de ativos culturais. 
 
 ## Projetos correlatos
@@ -46,6 +47,8 @@ Lista dos principais softwares que compõe e aplicação. Maiores detalhes, ver 
 
 - [Ubuntu Server >= 14.04](http://www.ubuntu.com) ou [Debian Server >= 8](https://www.debian.org.)
 =======
+=======
+>>>>>>> 47f7a58... Update README.md
 Mapas Culturais é uma aplicação web server-side baseada em linguagem PHP e banco de dados Postgres, entre outras tecnologias e componentes, que propicia um ambiente virtual para mapeamento, divulgação e gestão de ativos culturais.  
 
 ### Documentação 
@@ -57,6 +60,9 @@ Toda documentação da aplicação está na pasta [doc](doc). Principais referê
 - [Importação de arquivos de dados geoespaciais (Shapefiles)](doc/shapefiles.md)
 
 ### Requisitos para Instalação
+<<<<<<< HEAD
+>>>>>>> 47f7a58... Update README.md
+=======
 >>>>>>> 47f7a58... Update README.md
 - [PHP >= 5.4](http://php.net)
   - [php5-gd](http://php.net/manual/pt_BR/book.image.php)
