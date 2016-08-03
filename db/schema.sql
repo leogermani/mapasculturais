@@ -609,8 +609,6 @@ CREATE SEQUENCE agent_relation_id_seq
     CACHE 1;
 
 
-ALTER TABLE agent_relation_id_seq OWNER TO mapasculturais;
-
 --
 -- Name: agent_relation_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
@@ -627,8 +625,6 @@ CREATE TABLE db_update (
     exec_time timestamp without time zone DEFAULT now() NOT NULL
 );
 
-
-ALTER TABLE db_update OWNER TO mapasculturais;
 
 --
 -- Name: event; Type: TABLE; Schema: public; Owner: -
@@ -649,8 +645,6 @@ CREATE TABLE event (
 );
 
 
-ALTER TABLE event OWNER TO mapasculturais;
-
 --
 -- Name: event_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
@@ -662,8 +656,6 @@ CREATE SEQUENCE event_id_seq
     NO MAXVALUE
     CACHE 1;
 
-
-ALTER TABLE event_id_seq OWNER TO mapasculturais;
 
 --
 -- Name: event_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
@@ -724,6 +716,7 @@ CREATE SEQUENCE event_occurrence_cancellation_id_seq
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
+
 
 --
 -- Name: event_occurrence_cancellation_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
@@ -945,8 +938,6 @@ CREATE TABLE project (
     published_registrations boolean DEFAULT false NOT NULL
 );
 
-
-ALTER TABLE project OWNER TO mapasculturais;
 
 --
 -- Name: project_event; Type: TABLE; Schema: public; Owner: -
@@ -1196,8 +1187,6 @@ CREATE TABLE request (
 );
 
 
-ALTER TABLE request OWNER TO mapasculturais;
-
 --
 -- Name: role; Type: TABLE; Schema: public; Owner: -
 --
@@ -1208,8 +1197,6 @@ CREATE TABLE role (
     name character varying(32) NOT NULL
 );
 
-
-ALTER TABLE role OWNER TO mapasculturais;
 
 --
 -- Name: role_id_seq; Type: SEQUENCE; Schema: public; Owner: -
@@ -1222,8 +1209,6 @@ CREATE SEQUENCE role_id_seq
     NO MAXVALUE
     CACHE 1;
 
-
-ALTER TABLE role_id_seq OWNER TO mapasculturais;
 
 --
 -- Name: role_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
@@ -1253,8 +1238,6 @@ CREATE TABLE space (
 );
 
 
-ALTER TABLE space OWNER TO mapasculturais;
-
 --
 -- Name: COLUMN space.location; Type: COMMENT; Schema: public; Owner: -
 --
@@ -1273,8 +1256,6 @@ CREATE SEQUENCE space_id_seq
     NO MAXVALUE
     CACHE 1;
 
-
-ALTER TABLE space_id_seq OWNER TO mapasculturais;
 
 --
 -- Name: space_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
@@ -1295,8 +1276,6 @@ CREATE TABLE space_meta (
 );
 
 
-ALTER TABLE space_meta OWNER TO mapasculturais;
-
 --
 -- Name: space_meta_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
@@ -1308,8 +1287,6 @@ CREATE SEQUENCE space_meta_id_seq
     NO MAXVALUE
     CACHE 1;
 
-
-ALTER TABLE space_meta_id_seq OWNER TO mapasculturais;
 
 --
 -- Name: space_meta_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
@@ -1330,8 +1307,6 @@ CREATE TABLE term (
 );
 
 
-ALTER TABLE term OWNER TO mapasculturais;
-
 --
 -- Name: COLUMN term.taxonomy; Type: COMMENT; Schema: public; Owner: -
 --
@@ -1350,8 +1325,6 @@ CREATE SEQUENCE term_id_seq
     NO MAXVALUE
     CACHE 1;
 
-
-ALTER TABLE term_id_seq OWNER TO mapasculturais;
 
 --
 -- Name: term_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
@@ -1372,8 +1345,6 @@ CREATE TABLE term_relation (
 );
 
 
-ALTER TABLE term_relation OWNER TO mapasculturais;
-
 --
 -- Name: term_relation_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
@@ -1385,8 +1356,6 @@ CREATE SEQUENCE term_relation_id_seq
     NO MAXVALUE
     CACHE 1;
 
-
-ALTER TABLE term_relation_id_seq OWNER TO mapasculturais;
 
 --
 -- Name: term_relation_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
@@ -1460,8 +1429,6 @@ CREATE TABLE usr (
     profile_id integer
 );
 
-
-ALTER TABLE usr OWNER TO mapasculturais;
 
 --
 -- Name: COLUMN usr.auth_provider; Type: COMMENT; Schema: public; Owner: -
