@@ -122,7 +122,8 @@ class App extends \Slim\Slim{
             ],
             'api_outputs' => [],
             'image_transformations' => [],
-            'registration_agent_relations' => []
+            'registration_agent_relations' => [],
+            'registration_fields' => []
         ];
 
     protected $_registerLocked = true;
@@ -133,6 +134,8 @@ class App extends \Slim\Slim{
 
     protected $_accessControlEnabled = true;
     protected $_workflowEnabled = true;
+
+    protected $_plugins = [];
 
     /**
      * Initializes the application instance.
@@ -192,6 +195,14 @@ class App extends \Slim\Slim{
                 return true;
             }
 
+	    $namespaces = $config['namespaces'];
+            
+            foreach($config['plugins'] as $plugin){
+                $dir = isset($plugin['path']) ? $plugin['path'] : PLUGINS_PATH . $plugin['namespace'];
+                
+                $namespaces[$plugin['namespace']] = $dir;
+            }
+
             foreach($config['namespaces'] as $namespace => $base_dir){
                 if(strpos($class, $namespace) === 0){
                     $path = str_replace('\\', '/', str_replace($namespace, $base_dir, $class) . '.php' );
@@ -244,6 +255,18 @@ class App extends \Slim\Slim{
             'view' => new $theme_class($config['themes.assetManager']),
             'mode' => $this->_config['app.mode']
         ]);
+
+	foreach($config['plugins'] as $slug => $plugin){
+            $_namespace = $plugin['namespace'];
+            $_class = isset($plugin['class']) ? $plugin['class'] : 'Plugin';
+            $plugin_class_name = "$_namespace\\$_class";
+            
+            $plugin_config = isset($plugin['config']) && is_array($plugin['config']) ? $plugin['config'] : [];
+            
+            $slug = is_numeric($slug) ? $_namespace : $slug;
+            
+            $this->_plugins[$slug] = new $plugin_class_name($plugin_config);
+        }
 
         $config = $this->_config;
 
@@ -540,6 +563,7 @@ class App extends \Slim\Slim{
 
         $this->registerController('registration',                   'MapasCulturais\Controllers\Registration');
         $this->registerController('registrationFileConfiguration',  'MapasCulturais\Controllers\RegistrationFileConfiguration');
+	$this->registerController('registrationFieldConfiguration', 'MapasCulturais\Controllers\RegistrationFieldConfiguration');
 
         $this->registerController('term',           'MapasCulturais\Controllers\Term');
         $this->registerController('file',           'MapasCulturais\Controllers\File');
@@ -553,6 +577,64 @@ class App extends \Slim\Slim{
         $this->registerApiOutput('MapasCulturais\ApiOutputs\Json');
         $this->registerApiOutput('MapasCulturais\ApiOutputs\Html');
         $this->registerApiOutput('MapasCulturais\ApiOutputs\Excel');
+
+	        
+        // register registration field types
+        
+        $this->registerRegistrationFieldType(new Definitions\RegistrationFieldType([
+            'slug' => 'textarea',
+            'name' => $this->txt('Textarea Field')
+        ]));
+        
+        $this->registerRegistrationFieldType(new Definitions\RegistrationFieldType([
+            'slug' => 'text',
+            'name' => $this->txt('Text Field')
+        ]));
+        
+        $this->registerRegistrationFieldType(new Definitions\RegistrationFieldType([
+            'slug' => 'date',
+            'name' => $this->txt('Date Field')
+        ]));
+        
+        $this->registerRegistrationFieldType(new Definitions\RegistrationFieldType([
+            'slug' => 'url',
+            'name' => $this->txt('URL Field'),
+            'validations' => [
+                'v::url()' => $this->txt('The value is not a valid URL')
+            ]
+        ]));
+        
+        $this->registerRegistrationFieldType(new Definitions\RegistrationFieldType([
+            'slug' => 'email',
+            'name' => $this->txt('Email Field'),
+            'validations' => [
+                'v::email()' => $this->txt('The value is not a valid email')
+            ]
+        ]));
+        
+        $this->registerRegistrationFieldType(new Definitions\RegistrationFieldType([
+            'slug' => 'select',
+            'name' => $this->txt('Select Field'),
+            'requireValuesConfiguration' => true
+        ]));
+        
+//        $this->registerRegistrationFieldType(new Definitions\RegistrationFieldType([
+//            'slug' => 'radio',
+//            'name' => $this->txt('Radio Buttons Field'),
+//            'requireValuesConfiguration' => true
+//        ]));
+        
+        $this->registerRegistrationFieldType(new Definitions\RegistrationFieldType([
+            'slug' => 'checkboxes',
+            'name' => $this->txt('Check Boxes Field'),
+            'requireValuesConfiguration' => true,
+            'serialize' => function (array $value) {
+                return json_encode($value);
+            },
+            'unserialize' => function ($value) {
+                return json_decode($value);
+            }
+        ]));
 
         /**
          * @todo melhores mensagens de erro
@@ -758,7 +840,7 @@ class App extends \Slim\Slim{
         }
         
         // register seal time unit types
-		$entity_class = 'MapasCulturais\Entities\Seal';
+	$entity_class = 'MapasCulturais\Entities\Seal';
         
         foreach($seal_types['items'] as $type_id => $type_config){
         	$type = new Definitions\EntityType($entity_class, $type_id, $type_config['name']);
@@ -798,6 +880,10 @@ class App extends \Slim\Slim{
         }
 
         $this->view->register();
+
+	foreach($this->_plugins as $plugin){
+            $plugin->register();
+        }
         
         $this->applyHookBoundTo($this, 'app.register',[&$this->_register]);
     }
@@ -1647,6 +1733,7 @@ class App extends \Slim\Slim{
                 $this->_register['entity_types'][$type->entity_class] = [];
 
         $this->_register['entity_types'][$type->entity_class][$type->id] = $type;
+
     }
 
     /**
@@ -1704,6 +1791,22 @@ class App extends \Slim\Slim{
             $entity = $entity->getClassName();
 
         return @$this->_register['entity_types'][$entity];
+    }
+
+    function registerRegistrationFieldType(Definitions\RegistrationFieldType $registration_field){
+        $this->_register['registration_fields'][$registration_field->slug] = $registration_field;
+    }
+    
+    function getRegisteredRegistrationFieldTypes(){
+        return $this->_register['registration_fields'];
+    }
+    
+    function getRegisteredRegistrationFieldTypeBySlug($slug) {
+        if (isset($this->_register['registration_fields'][$slug])) {
+            return $this->_register['registration_fields'][$slug];
+        } else {
+            return null;
+        }
     }
 
     /**

@@ -63,12 +63,14 @@ class Project extends EntityController {
         if(!key_exists('id', $this->urlData))
             $app->pass();
 
-        $entity = $this->repo()->find($this->urlData['id']);
+        $entity = $this->requestedEntity;
 
         if(!$entity)
             $app->pass();
 
         $entity->checkPermission('@control');
+
+	$app->controller('Registration')->registerRegistrationMetadata($entity);
 
         $response = $app->response();
         //$response['Content-Encoding'] = 'UTF-8';
