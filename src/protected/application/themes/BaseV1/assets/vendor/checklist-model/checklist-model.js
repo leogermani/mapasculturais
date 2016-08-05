@@ -1,12 +1,14 @@
 /**
  * Checklist-model
  * AngularJS directive for list of checkboxes
+ * https://github.com/vitalets/checklist-model
+ * License: MIT http://opensource.org/licenses/MIT
  */
 
 angular.module('checklist-model', [])
 .directive('checklistModel', ['$parse', '$compile', function($parse, $compile) {
   // contains
-  function contains(arr, item) {
+  function contains(arr, item, comparator) {
     if (angular.isArray(arr)) {
       for (var i = 0; i < arr.length; i++) {
         if (angular.equals(arr[i], item)) {

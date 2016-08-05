@@ -30,6 +30,11 @@
                     };
 
                     $scope.clickOther = function(){
+			if(sanitize($scope.data.value) === '' || $scope.terms[sanitize($scope.data.value)]){
+                            $scope.data.value = '';
+                            $scope.data.showOther = true;
+                        }
+
                         $scope.data.value = $scope.data.otherValue || '';
                         $scope.data.showOther = true;
                     };
