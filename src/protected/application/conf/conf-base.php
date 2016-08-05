@@ -49,7 +49,11 @@ return array(
     'app.enabled.spaces'   => true,
     'app.enabled.projects' => true,
     'app.enabled.events'   => true,
+<<<<<<< HEAD
     'app.enabled.seals'	   => false,
+=======
+    'app.enabled.seals'   => true,
+>>>>>>> master
     'app.enabled.apps'     => true,
 
     'themes.active' => 'MapasCulturais\Themes\BaseV1',
@@ -148,20 +152,21 @@ return array(
     ),
 
     /* ============ ENTITY PROPERTIES SEALS ============= */
-    'app.entityPropertiesSeals' => array(
+    'app.entityPropertiesLabels' => array(
         '@default' => array(
             'id' => 'Id',
             'name' => 'Nome',
             'createTimestamp' => 'Data de Criação',
             'shortDescription' => 'Descrição Curta',
             'longDescription' => 'Descrição Longa',
-        	'certificateText' => 'Conteúdo da Impressão do Certificado',
-        	'validPeriod'	=> 'Período de Validade',
+            'certificateText' => 'Conteúdo da Impressão do Certificado',
+            'validPeriod'	=> 'Período de Validade',
             'status' => 'Status'
         ),
 
 //        'MapasCulturais\Entities\Agent' => array()
     ),
+    
 
 
     // 'app.projectRegistrationAgentRelationGroupName' => "Inscrições",
@@ -188,7 +193,15 @@ return array(
     'app.log.assets' => false,
 
     /* ==================== CACHE ================== */
-    'app.cache' => new \Doctrine\Common\Cache\ApcCache(),
+    'app.cache' => function_exists('apcu_add') ? 
+        new \Doctrine\Common\Cache\ApcuCache() : 
+        ( 
+            function_exists('apc_add') ? 
+                new \Doctrine\Common\Cache\ApcCache() :
+                new \Doctrine\Common\Cache\FilesystemCache('/tmp/CACHE--' . str_replace(':', '_', @$_SERVER['HTTP_HOST']))
+                
+        ),
+    
     'app.cache.namespace' => @$_SERVER['HTTP_HOST'],
     
     'app.useRegisteredAutoloadCache' => true,
@@ -291,8 +304,10 @@ return array(
             // workflow actions
             'aprovar-notificacao' => array('notification', 'approve'),
             'rejeitar-notificacao' => array('notification', 'reject'),
+
             'inscricao' => array('registration', 'view'),
-        	'certificado' => array('relatedSeal','single'),
+            'certificado' => array('relatedSeal','single'),
+
         ),
         'controllers' => array(
             'painel'         => 'panel',

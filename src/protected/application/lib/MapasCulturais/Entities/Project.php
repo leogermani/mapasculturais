@@ -244,7 +244,12 @@ class Project extends \MapasCulturais\Entity
      * @return \MapasCulturais\Entities\Registration[]
      */
     function getSentRegistrations(){
+<<<<<<< HEAD
 	$registrations = $this->getAllRegistrations();
+=======
+        $registrations = $this->getAllRegistrations();
+        
+>>>>>>> master
         $result = [];
         foreach($registrations as $re){
             if($re->status > 0)

@@ -22,6 +22,7 @@ class Registration extends \MapasCulturais\Entity
         Traits\EntityAgentRelation,
     	Traits\EntitySealRelation;
 
+
     const STATUS_SENT = self::STATUS_ENABLED;
     const STATUS_APPROVED = 10;
     const STATUS_WAITLIST = 8;
@@ -426,7 +427,11 @@ class Registration extends \MapasCulturais\Entity
 
         $project = $this->project;
 
+<<<<<<< HEAD
 	$use_category = (bool) $project->registrationCategories;
+=======
+        $use_category = (bool) $project->registrationCategories;
+>>>>>>> master
         
         if($use_category && !$this->category){
             $errorsResult['category'] = [sprintf($app->txt('The field "%s" is required.'), $project->registrationCategTitle)];
@@ -434,6 +439,7 @@ class Registration extends \MapasCulturais\Entity
 
         $definitionsWithAgents = $this->_getDefinitionsWithAgents();
 
+        // validate agents
         foreach($definitionsWithAgents as $def){
             $errors = [];
 
@@ -477,12 +483,21 @@ class Registration extends \MapasCulturais\Entity
 
         }
 
+        // validate attachments
         foreach($project->registrationFileConfigurations as $rfc){
+<<<<<<< HEAD
 	           
             if($use_category && count($rfc->categories) > 0 && !in_array($this->category, $rfc->categories)){
                 continue;
             }
 
+=======
+            
+            if($use_category && count($rfc->categories) > 0 && !in_array($this->category, $rfc->categories)){
+                continue;
+            }
+            
+>>>>>>> master
             $errors = [];
             if($rfc->required){
                 if(!isset($this->files[$rfc->fileGroupName])){
@@ -494,6 +509,44 @@ class Registration extends \MapasCulturais\Entity
             }
         }
 	
+        // validate fields
+        foreach ($project->registrationFieldConfigurations as $field) {
+
+            if ($use_category && count($field->categories) > 0 && !in_array($this->category, $field->categories)) {
+                continue;
+            }
+
+            $errors = [];
+            
+            $prop_name = $field->getFieldName();
+            $val = $this->$prop_name;
+            
+            $empty = (is_string($val) && !trim($val)) || !$val;
+            
+            if ($field->required) {
+                if ($empty) {
+                    $errors[] = sprintf($app->txt('The field "%s" is required.'), $field->title);
+                }
+            }
+            if (!$empty){
+                foreach($field->getFieldTypeDefinition()->validations as $validation => $error_message){
+                    if(strpos($validation,'v::') === 0){
+                        $validation = str_replace('v::', 'MapasCulturais\Validator::', $validation);
+
+                        eval("\$ok = {$validation}->validate(\$this->{$prop_name});");
+
+                        if (!$ok) {
+                            $errors[] = $error_message;
+                        }
+                    }
+                }
+            }
+            
+            if ($errors) {
+                $errorsResult['registration-field-' . $field->id] = $errors;
+            }
+        }
+
         // validate fields
         foreach ($project->registrationFieldConfigurations as $field) {
 

@@ -186,7 +186,6 @@ class App extends \Slim\Slim{
         $this->_cache->setNamespace($config['app.cache.namespace']);
 
 
-
         spl_autoload_register(function($class) use ($config){
             $cache_id = "AUTOLOAD_CLASS:$class";
             if($config['app.useRegisteredAutoloadCache'] && $this->cache->contains($cache_id)){
@@ -195,15 +194,15 @@ class App extends \Slim\Slim{
                 return true;
             }
 
-	    $namespaces = $config['namespaces'];
+            $namespaces = $config['namespaces'];
             
             foreach($config['plugins'] as $plugin){
                 $dir = isset($plugin['path']) ? $plugin['path'] : PLUGINS_PATH . $plugin['namespace'];
                 
                 $namespaces[$plugin['namespace']] = $dir;
             }
-
-            foreach($config['namespaces'] as $namespace => $base_dir){
+            
+            foreach($namespaces as $namespace => $base_dir){
                 if(strpos($class, $namespace) === 0){
                     $path = str_replace('\\', '/', str_replace($namespace, $base_dir, $class) . '.php' );
 
@@ -215,7 +214,6 @@ class App extends \Slim\Slim{
                     }
                 }
             }
-
         });
 
         // extende a config with theme config files
@@ -256,7 +254,7 @@ class App extends \Slim\Slim{
             'mode' => $this->_config['app.mode']
         ]);
 
-	foreach($config['plugins'] as $slug => $plugin){
+        foreach($config['plugins'] as $slug => $plugin){
             $_namespace = $plugin['namespace'];
             $_class = isset($plugin['class']) ? $plugin['class'] : 'Plugin';
             $plugin_class_name = "$_namespace\\$_class";
@@ -578,7 +576,6 @@ class App extends \Slim\Slim{
         $this->registerApiOutput('MapasCulturais\ApiOutputs\Html');
         $this->registerApiOutput('MapasCulturais\ApiOutputs\Excel');
 
-	        
         // register registration field types
         
         $this->registerRegistrationFieldType(new Definitions\RegistrationFieldType([
@@ -882,6 +879,10 @@ class App extends \Slim\Slim{
         $this->view->register();
 
 	foreach($this->_plugins as $plugin){
+            $plugin->register();
+        }
+        
+        foreach($this->_plugins as $plugin){
             $plugin->register();
         }
         
@@ -1503,6 +1504,17 @@ class App extends \Slim\Slim{
         $this->_register['controllers_view_dirs'][$id] = $view_dir ? $view_dir : $id;
     }
     
+    public function getRegisteredControllers($return_controller_object = false){
+        $controllers = $this->_register['controllers'];
+        if($return_controller_object){
+            foreach($controllers as $id => $class){
+                $controllers[$id] = $class::i();
+            }
+        }
+        
+        return $controllers;
+    }
+
     public function getRegisteredControllers($return_controller_object = false){
         $controllers = $this->_register['controllers'];
         if($return_controller_object){

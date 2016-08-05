@@ -93,7 +93,8 @@ class Registration extends EntityController {
             $this->tmpFile = $tmpFile;
         });
 
-	$app->hook('<<GET|POST|PUT|PATCH|DELETE>>(registration.<<*>>):before', function() {
+        
+        $app->hook('<<GET|POST|PUT|PATCH|DELETE>>(registration.<<*>>):before', function() {
             $registration = $this->getRequestedEntity();
             
             
@@ -111,10 +112,6 @@ class Registration extends EntityController {
     }
 
     function registerRegistrationMetadata(\MapasCulturais\Entities\Project $project){
-        
-        $app = App::i();
-
-        foreach($project->registrationFieldConfigurations as $field){
         
         $app = App::i();
 

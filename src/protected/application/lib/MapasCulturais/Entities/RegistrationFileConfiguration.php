@@ -71,6 +71,13 @@ class RegistrationFileConfiguration extends \MapasCulturais\Entity {
     protected $categories = [];
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="categories", type="array", nullable=true)
+     */
+    protected $categories = [];
+
+    /**
      * @var \MapasCulturais\Entities\AgentFile[] Files
      *
      * @ORM\OneToMany(targetEntity="MapasCulturais\Entities\RegistrationFileConfigurationFile", mappedBy="owner", cascade="remove", orphanRemoval=true)
@@ -84,6 +91,15 @@ class RegistrationFileConfiguration extends \MapasCulturais\Entity {
 
     public function setOwnerId($id){
         $this->owner = App::i()->repo('Project')->find($id);
+    }
+    
+    public function setCategories($value) {
+        if(!$value){
+            $value = [];
+        } else if (!is_array($value)){
+            $value = explode("\n", $value);
+        }
+        $this->categories = $value;
     }
 
     public function setCategories($value) {
@@ -106,7 +122,6 @@ class RegistrationFileConfiguration extends \MapasCulturais\Entity {
             'template' => $this->getFile('registrationFileTemplate'),
             'groupName' => $this->fileGroupName,
             'categories' => $this->categories
-
         ];
     }
 

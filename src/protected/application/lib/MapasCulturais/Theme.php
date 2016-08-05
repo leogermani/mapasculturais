@@ -247,7 +247,7 @@ abstract class Theme extends \Slim\View {
         // render the template
         $__templatePath = $this->resolveFilename('views', $__template_filename);
 
-	if(!$__templatePath){
+        if(!$__templatePath){
             throw new Exceptions\TemplateNotFound("Template $__template_filename not found");
         }
 
@@ -305,6 +305,7 @@ abstract class Theme extends \Slim\View {
             foreach($_data->keys() as $k){
                 $__data[$k] = $_data->get($k);
             }
+
         }
         
         $app->applyHookBoundTo($this, 'view.partial(' . $__template . ').params', [&$__data, &$__template]);
@@ -315,7 +316,7 @@ abstract class Theme extends \Slim\View {
         } else {
             $__template_filename = $__template . '.php';
         }
- 
+        
         if(is_array($__data)){
             extract($__data);
         }
@@ -325,13 +326,16 @@ abstract class Theme extends \Slim\View {
             $__templatePath = $this->resolveFilename('layouts', 'parts/' . $__template_filename);
         }else{
             $__templatePath = $this->resolveFilename('views', $__template_filename);
-        }
 
+        }
+        
         if(!$__templatePath){
             throw new Exceptions\TemplateNotFound("Template $__template_filename not found");
+
         }
 
         $__template_name = substr(preg_replace('#^'.$this->templatesDirectory.'/?#', '', $__templatePath),0,-4);
+
 
         $app->applyHookBoundTo($this, 'view.partial(' . $__template . '):before', ['template' => $__template]);
 

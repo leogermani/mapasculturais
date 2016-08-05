@@ -21,10 +21,11 @@
         }
     }]);
 
+
     app.directive('onRepeatDone', ['$rootScope', '$timeout', function($rootScope, $timeout) {
         return function($scope, element, attrs) {
             if ($scope.$last) {
-		// só para esperar a renderização
+                // só para esperar a renderização
                 $timeout(function(){
                     $rootScope.$emit('repeatDone:' + attrs.onRepeatDone);
                 });

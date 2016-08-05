@@ -252,7 +252,11 @@ article.project .highlighted-message .btn {
         position: relative;
         padding: $padding-base 14.5rem $padding-base $padding-base;
         border-bottom: $thin-row;
+<<<<<<< HEAD
 	font-size: .8em;
+=======
+        font-size: .8em;
+>>>>>>> master
         .attachment-title {
             font-size: $font-size-smaller;
             font-weight: normal;
@@ -289,7 +293,7 @@ article.project .highlighted-message .btn {
             border-bottom: none;
         }
         &.registration-edit-mode {
-	    padding-right: 1em 14rem 1em 1em;
+            padding-right: 1em 14rem 1em 1em;
             p {
                 margin-bottom: 0;
             }
@@ -307,7 +311,6 @@ article.project .highlighted-message .btn {
                 font-weight: normal;
                 text-decoration: underline;
             }
-
         }
     }
 }

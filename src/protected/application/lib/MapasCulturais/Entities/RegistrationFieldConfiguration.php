@@ -1,4 +1,8 @@
 <?php
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 namespace MapasCulturais\Entities;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -67,14 +71,22 @@ class RegistrationFieldConfiguration extends \MapasCulturais\Entity {
      * @ORM\Column(name="required", type="boolean", nullable=false)
      */
     protected $required = false;
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> master
     /**
      * @var string
      *
      * @ORM\Column(name="field_type", type="string", length=255, nullable=false)
      */
     protected $fieldType = null;
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> master
     /**
      * @var string
      *
@@ -83,17 +95,31 @@ class RegistrationFieldConfiguration extends \MapasCulturais\Entity {
     protected $fieldOptions = [];
 
     public function setOwnerId($id){
+<<<<<<< HEAD
         $this->owner = App::i()->repo('Project')->find($id);
     }
 
+=======
+//        $this->owner = $this->repo()->find('project', $id);
+        $this->owner = App::i()->repo('Project')->find($id);
+    }
+    
+>>>>>>> master
     public function setFieldOptions($value){
         if(!is_array($value)){
             $value = explode("\n", $value);
         }
+<<<<<<< HEAD
 
         $this->fieldOptions = $value;
     }
 
+=======
+        
+        $this->fieldOptions = $value;
+    }
+    
+>>>>>>> master
     public function setCategories($value) {
         if(!$value){
             $value = [];
@@ -102,6 +128,7 @@ class RegistrationFieldConfiguration extends \MapasCulturais\Entity {
         }
         $this->categories = $value;
     }
+<<<<<<< HEAD
 
     public function getFieldName(){
         return 'field_' . $this->id;
@@ -114,6 +141,20 @@ class RegistrationFieldConfiguration extends \MapasCulturais\Entity {
    public function getFieldTypeDefinition(){
        return App::i()->getRegisteredRegistrationFieldTypeBySlug($this->fieldType);
    }
+=======
+    
+    public function getFieldName(){
+        return 'field_' . $this->id;
+    }
+    
+    /**
+     * 
+     * @return \MapasCulturais\Definitions\RegistrationFieldType
+     */
+    public function getFieldTypeDefinition(){
+        return App::i()->getRegisteredRegistrationFieldTypeBySlug($this->fieldType);
+    }
+>>>>>>> master
 
     public function jsonSerialize() {
         
@@ -125,7 +166,11 @@ class RegistrationFieldConfiguration extends \MapasCulturais\Entity {
             'required' => $this->required,
             'fieldType' => $this->fieldType,
             'fieldOptions' => $this->fieldOptions,
+<<<<<<< HEAD
            'categories' => $this->categories,
+=======
+            'categories' => $this->categories,
+>>>>>>> master
             'fieldName' => $this->getFieldName()
         ];
     }
@@ -137,6 +182,10 @@ class RegistrationFieldConfiguration extends \MapasCulturais\Entity {
     protected function canUserModify($user){
         return $this->_canUser($user);
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
     protected function canUserRemove($user){
         return $this->_canUser($user);
     }
@@ -145,9 +194,15 @@ class RegistrationFieldConfiguration extends \MapasCulturais\Entity {
         return $this->_canUser($user);
     }
 
+<<<<<<< HEAD
    /** @ORM\PrePersist */
     public function _prePersist($args = null){
        App::i()->applyHookBoundTo($this, 'entity(registration).fieldConfiguration(' . $this->fieldType . ').insert:before', $args);
+=======
+    /** @ORM\PrePersist */
+    public function _prePersist($args = null){
+        App::i()->applyHookBoundTo($this, 'entity(registration).fieldConfiguration(' . $this->fieldType . ').insert:before', $args);
+>>>>>>> master
         
         if(!$this->getFieldTypeDefinition()->requireValuesConfiguration){
             $this->fieldOptions = [];
@@ -170,7 +225,11 @@ class RegistrationFieldConfiguration extends \MapasCulturais\Entity {
     /** @ORM\PreUpdate */
     public function _preUpdate($args = null){
         App::i()->applyHookBoundTo($this, 'entity(registration).fieldConfiguration(' . $this->fieldType . ').update:before', $args);
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> master
         if(!$this->getFieldTypeDefinition()->requireValuesConfiguration){
             $this->fieldOptions = [];
         }

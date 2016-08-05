@@ -166,43 +166,42 @@
     module.factory('RegistrationConfigurationService', ['$rootScope', '$q', '$http', '$log', 'UrlService', function($rootScope, $q, $http, $log, UrlService) {
         return function (controllerId){
             var url = new UrlService(controllerId);
-            return {
-                getUrl: function(action, id){
-                    return url.create(action, id);
-                },
-                create: function(data){
-                    var deferred = $q.defer();
+        return {
+            getUrl: function(action, id){
+                return url.create(action, id);
+            },
+            create: function(data){
+                var deferred = $q.defer();
 
-                    $http.post(this.getUrl(), data)
-                        .success(
-                            function(response){
-                                deferred.resolve(response);
-                            }
-                        );
-                    return deferred.promise;
-                },
-                edit: function(data){
-                    var deferred = $q.defer();
+                $http.post(this.getUrl(), data)
+                    .success(
+                        function(response){
+                            deferred.resolve(response);
+                        }
+                    );
+                return deferred.promise;
+            },
+            edit: function(data){
+                var deferred = $q.defer();
 
-                    $http.post(url.create('single', data.id), data)
-                        .success(
-                            function(response){
-                                deferred.resolve(response);
-                            }
-                        );
-                    return deferred.promise;
-                },
-                delete: function(id){
-                    var deferred = $q.defer();
-                    $http.get(url.create('delete', id))
-                        .success(
-                            function(response){
-                                deferred.resolve(response);
-                            }
-                        );
-                    return deferred.promise;
-                }
-            };
+                $http.post(url.create('single', data.id), data)
+                    .success(
+                        function(response){
+                            deferred.resolve(response);
+                        }
+                    );
+                return deferred.promise;
+            },
+            delete: function(id){
+                var deferred = $q.defer();
+                $http.get(url.create('delete', id))
+                    .success(
+                        function(response){
+                            deferred.resolve(response);
+                        }
+                    );
+                return deferred.promise;
+            }
         };
     }]);
 
@@ -218,6 +217,7 @@ module.controller('RegistrationConfigurationsController', ['$scope', '$rootScope
             return fileService.getUrl('upload', ownerId);
         };
         
+
         var fieldTypes = MapasCulturais.registrationFieldTypes.slice();
         
         var fieldTypesBySlug = {};
@@ -239,7 +239,7 @@ module.controller('RegistrationConfigurationsController', ['$scope', '$rootScope
             required: false,
             categories: []
         };
-        
+
         var fieldConfigurationSkeleton = {
             ownerId: MapasCulturais.entity.id,
             fieldType: null,
@@ -294,6 +294,17 @@ module.controller('RegistrationConfigurationsController', ['$scope', '$rootScope
             return model.categories.length === 0;
         }
 
+        $scope.data.newFieldConfiguration.fieldType = fieldTypes[0].slug;
+        
+        
+        $interval(function(){
+            $scope.data.categories = jQuery('#registration-categories .js-categories-values').text().split("\n");
+        },1000);
+        
+        $scope.allCategories = function(model){
+            return model.categories.length === 0;
+        }
+
         function sortFields(){
             $scope.data.fields.sort(function(a,b){
                 if(a.title > b.title){
@@ -306,6 +317,37 @@ module.controller('RegistrationConfigurationsController', ['$scope', '$rootScope
             });
         }
         
+        sortFields();
+        
+        function validationErrors(response){
+            Object.keys(response.data).forEach(function(prop){
+                Object.keys(response.data[prop]).forEach(function(error){
+                    MapasCulturais.Messages.error(response.data[prop][error]);
+                });
+            });
+        }
+        
+        // Fields
+        $scope.fieldConfigurationBackups = [];
+        
+        $scope.createFieldConfiguration = function(){
+            $scope.data.fieldSpinner = true;
+            fieldService.create($scope.data.newFieldConfiguration).then(function(response){
+                $scope.data.fieldSpinner = false;
+                
+                if (response.error) {
+                    validationErrors(response);
+                    
+                } else {
+                    $scope.data.fields.push(response);
+                    sortFields();
+                    EditBox.close('editbox-registration-fields');
+                    $scope.data.newFieldConfiguration = angular.copy(fieldConfigurationSkeleton);
+                    MapasCulturais.Messages.success('Campo criado.');
+                }
+            });
+        };
+
         sortFields();
         
         function validationErrors(response){
@@ -383,6 +425,9 @@ module.controller('RegistrationConfigurationsController', ['$scope', '$rootScope
             $scope.fieldConfigurationBackups[index] = angular.copy($scope.data.fields[index]);
             EditBox.open('editbox-registration-field-'+id, event);
         };
+
+        // Files
+        $scope.fileConfigurationBackups = [];
 
         // Files
         $scope.fileConfigurationBackups = [];
@@ -810,6 +855,57 @@ module.controller('RegistrationConfigurationsController', ['$scope', '$rootScope
             }
         };
 
+        $scope.useCategories = MapasCulturais.entity.registrationCategories.length > 0;
+        
+        
+        if($scope.useCategories){
+            
+            RegistrationService.getSelectedCategory().then(function(value){
+                $scope.selectedCategory = value;
+                $interval(function(){
+                    
+                    RegistrationService.getSelectedCategory().then(function(selectedCategory) { 
+                        if($scope.selectedCategory !== selectedCategory){
+                            $scope.selectedCategory = selectedCategory;
+                            RegistrationService.save();
+                        }
+                    });
+                },50);
+            });
+            
+            $scope.$watch('selectedCategory', function(){
+                $timeout(function(){
+                    initEditables();
+                });
+            });
+
+        }
+        
+        $scope.showFieldForCategory = function(field){
+            if (!$scope.useCategories){
+                return true;
+            } else {
+                return field.categories.length === 0 || field.categories.indexOf($scope.selectedCategory) >= 0;
+            }
+        };
+        
+        
+        
+        $scope.printField = function(field, value){
+            
+            if (field.fieldType === 'date') {
+                return moment(value).format('DD-MM-YYYY');
+            } else if (field.fieldType === 'url'){
+                return '<a href="' + value + '">' + value + '</a>';
+            } else if (field.fieldType === 'email'){
+                return '<a href="mailto:' + value + '">' + value + '</a>';
+            } else if (value instanceof Array) {
+                return value.join(', ');
+            } else {
+                return value;
+            }
+        };
+
     }]);
 
     module.controller('ProjectController', ['$scope', '$rootScope', '$timeout', 'RegistrationService', 'EditBox', 'RelatedAgentsService', '$http', 'UrlService', function ($scope, $rootScope, $timeout, RegistrationService, EditBox, RelatedAgentsService, $http, UrlService) {
@@ -864,6 +960,9 @@ module.controller('RegistrationConfigurationsController', ['$scope', '$rootScope
 
                 propLabels : [],
                 
+                
+                fields: RegistrationService.getFields(),
+
                 
                 fields: RegistrationService.getFields(),
 

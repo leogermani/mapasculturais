@@ -10,15 +10,18 @@ $project = $entity->project;
 
 $this->addEntityToJs($entity);
 
+$this->addProjectToJs($project);
+
 $this->addRegistrationToJs($entity);
 
 $this->includeAngularEntityAssets($entity);
 
-$owner 			= isset($project->registrationSeals->owner)?$project->registrationSeals->owner:'';
-$institution	= isset($project->registrationSeals->institution)?$project->registrationSeals->institution:'';
-$collective		= isset($project->registrationSeals->collective)?$project->registrationSeals->collective:'';
+$_params = [
+    'entity' => $entity,
+    'project' => $project,
+    'action' => $action
+];
 
-$this->addSealsToJs(false,[$owner,$institution,$collective]);
 
 $_params = [
     'entity' => $entity,
@@ -30,7 +33,6 @@ $_params = [
 <?php $this->part('editable-entity', array('entity'=>$entity, 'action'=>$action));  ?>
 
 <article class="main-content registration" ng-controller="ProjectController">
-
     <?php $this->part('singles/registration--header', $_params); ?>
     
     <article>
@@ -42,6 +44,11 @@ $_params = [
         
         <?php $this->part('singles/registration-single--agents', $_params) ?>
         
+<<<<<<< HEAD
+=======
+        <?php $this->part('singles/registration-single--seals', $_params) ?>
+        
+>>>>>>> master
         <?php $this->part('singles/registration-single--fields', $_params) ?>
 
         <?php $this->applyTemplateHook('form','end'); ?>
