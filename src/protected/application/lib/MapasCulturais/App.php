@@ -882,10 +882,6 @@ class App extends \Slim\Slim{
             $plugin->register();
         }
         
-        foreach($this->_plugins as $plugin){
-            $plugin->register();
-        }
-        
         $this->applyHookBoundTo($this, 'app.register',[&$this->_register]);
     }
 
@@ -1504,17 +1500,6 @@ class App extends \Slim\Slim{
         $this->_register['controllers_view_dirs'][$id] = $view_dir ? $view_dir : $id;
     }
     
-    public function getRegisteredControllers($return_controller_object = false){
-        $controllers = $this->_register['controllers'];
-        if($return_controller_object){
-            foreach($controllers as $id => $class){
-                $controllers[$id] = $class::i();
-            }
-        }
-        
-        return $controllers;
-    }
-
     public function getRegisteredControllers($return_controller_object = false){
         $controllers = $this->_register['controllers'];
         if($return_controller_object){
