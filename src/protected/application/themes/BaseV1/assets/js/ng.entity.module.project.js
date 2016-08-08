@@ -429,9 +429,6 @@ module.controller('RegistrationConfigurationsController', ['$scope', '$rootScope
         // Files
         $scope.fileConfigurationBackups = [];
 
-        // Files
-        $scope.fileConfigurationBackups = [];
-        
         $scope.createFileConfiguration = function(){
             $scope.data.uploadSpinner = true;
             fileService.create($scope.data.newFileConfiguration).then(function(response){
@@ -960,9 +957,6 @@ module.controller('RegistrationConfigurationsController', ['$scope', '$rootScope
 
                 propLabels : [],
                 
-                
-                fields: RegistrationService.getFields(),
-
                 
                 fields: RegistrationService.getFields(),
 
