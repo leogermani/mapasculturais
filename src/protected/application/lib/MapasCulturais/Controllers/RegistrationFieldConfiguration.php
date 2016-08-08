@@ -22,7 +22,3 @@ class RegistrationFieldConfiguration extends EntityController {
         App::i()->pass();
     }
 }
-<<<<<<< HEAD
-?>
-=======
->>>>>>> master

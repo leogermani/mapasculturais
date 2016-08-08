@@ -427,11 +427,7 @@ class Registration extends \MapasCulturais\Entity
 
         $project = $this->project;
 
-<<<<<<< HEAD
-	$use_category = (bool) $project->registrationCategories;
-=======
         $use_category = (bool) $project->registrationCategories;
->>>>>>> master
         
         if($use_category && !$this->category){
             $errorsResult['category'] = [sprintf($app->txt('The field "%s" is required.'), $project->registrationCategTitle)];
@@ -485,19 +481,11 @@ class Registration extends \MapasCulturais\Entity
 
         // validate attachments
         foreach($project->registrationFileConfigurations as $rfc){
-<<<<<<< HEAD
-	           
-            if($use_category && count($rfc->categories) > 0 && !in_array($this->category, $rfc->categories)){
-                continue;
-            }
-
-=======
             
             if($use_category && count($rfc->categories) > 0 && !in_array($this->category, $rfc->categories)){
                 continue;
             }
             
->>>>>>> master
             $errors = [];
             if($rfc->required){
                 if(!isset($this->files[$rfc->fileGroupName])){

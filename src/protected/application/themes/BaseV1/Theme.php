@@ -14,11 +14,7 @@ class Theme extends MapasCulturais\Theme {
         'leaflet' => '0.7.3',
         'angular' => '1.5.5',
         'jquery' => '2.1.1',
-<<<<<<< HEAD
-	'jquery-ui' => '1.11.4',
-=======
         'jquery-ui' => '1.11.4',
->>>>>>> master
         'select2' => '3.5.0',
         'magnific-popup' => '0.9.9',
         'x-editable' => 'jquery-editable-dev-1.5.2'
@@ -444,13 +440,6 @@ class Theme extends MapasCulturais\Theme {
 
         $this->enqueueScript('vendor', 'jquery-ui', "vendor/jquery-ui-{$versions['jquery-ui']}/jquery-ui.js", array('jquery'));
         $this->enqueueScript('vendor', 'jquery-ui-datepicker-pt-BR', "vendor/jquery-ui-{$versions['jquery-ui']}/datepicker-pt-BR.js", array('jquery-ui'));
-<<<<<<< HEAD
-        $this->enqueueScript('vendor', 'jquery-ui-core', "vendor/jquery-ui-{$versions['jquery-ui']}/core.js", array('jquery'));
-        $this->enqueueScript('vendor', 'jquery-ui-position', "vendor/jquery-ui-{$versions['jquery-ui']}/position.js", array('jquery-ui-core'));
-        $this->enqueueScript('vendor', 'jquery-ui-datepicker', "vendor/jquery-ui-{$versions['jquery-ui']}/datepicker.js", array('jquery-ui-core'));
-        $this->enqueueScript('vendor', 'jquery-ui-datepicker-pt-BR', "vendor/jquery-ui-{$versions['jquery-ui']}/datepicker-pt-BR.js", array('jquery-ui-datepicker'));
-=======
->>>>>>> master
 
         $this->enqueueScript('vendor', 'angular', "vendor/angular-{$versions['angular']}/angular.js", array('jquery', 'jquery-ui-datepicker-pt-BR'));
         $this->enqueueScript('vendor', 'angular-sanitize', "vendor/angular-{$versions['angular']}/angular-sanitize.js", array('angular'));
@@ -458,11 +447,6 @@ class Theme extends MapasCulturais\Theme {
         $this->enqueueScript('vendor', 'angular-rison', '/vendor/angular-rison.js', array('angular'));
         $this->enqueueScript('vendor', 'ng-infinite-scroll', '/vendor/ng-infinite-scroll/ng-infinite-scroll.js', array('angular'));
 
-<<<<<<< HEAD
-        $this->enqueueScript('vendor', 'angular-ui-date', '/vendor/ui-date-master/src/date.js', array('jquery-ui-datepicker-pt-BR', 'angular'))
-=======
-        $this->enqueueScript('vendor', 'angular-ui-date', '/vendor/ui-date-master/src/date.js', array('jquery-ui-datepicker-pt-BR', 'angular'));
->>>>>>> master
         $this->enqueueScript('vendor', 'angular-ui-sortable', '/vendor/ui-sortable/sortable.js', array('jquery-ui', 'angular'));
         $this->enqueueScript('vendor', 'angular-checklist-model', '/vendor/checklist-model/checklist-model.js', array('jquery-ui', 'angular'));
 
@@ -780,19 +764,11 @@ class Theme extends MapasCulturais\Theme {
 
     function addProjectToJs(Entities\Project $entity){
         $app = App::i();
-<<<<<<< HEAD
-
-	$this->jsObject['entity']['useRegistrations'] = $entity->useRegistrations;
-        $this->jsObject['entity']['registrationFileConfigurations'] = $entity->registrationFileConfigurations ? $entity->registrationFileConfigurations->toArray() : array();
-	$this->jsObject['entity']['registrationFieldConfigurations'] = $entity->registrationFieldConfigurations ? $entity->registrationFieldConfigurations->toArray() : array();
-
-=======
         
         $this->jsObject['entity']['useRegistrations'] = $entity->useRegistrations;
         $this->jsObject['entity']['registrationFileConfigurations'] = $entity->registrationFileConfigurations ? $entity->registrationFileConfigurations->toArray() : array();
         $this->jsObject['entity']['registrationFieldConfigurations'] = $entity->registrationFieldConfigurations ? $entity->registrationFieldConfigurations->toArray() : array();
         
->>>>>>> master
         usort($this->jsObject['entity']['registrationFileConfigurations'], function($a,$b){
             if($a->title > $b->title){
                 return 1;
@@ -802,12 +778,8 @@ class Theme extends MapasCulturais\Theme {
                 return 0;
             }
         });
-<<<<<<< HEAD
-	$field_types = array_values($app->getRegisteredRegistrationFieldTypes());
-=======
         
         $field_types = array_values($app->getRegisteredRegistrationFieldTypes());
->>>>>>> master
         
         
         usort($field_types, function ($a,$b){
@@ -815,18 +787,7 @@ class Theme extends MapasCulturais\Theme {
         });
         
         $this->jsObject['registrationFieldTypes'] = $field_types;
-<<<<<<< HEAD
 
-        $this->jsObject['entity']['registrationCategories'] = $entity->registrationCategories;
-        $this->jsObject['entity']['published'] = $entity->publishedRegistrations;
-       
-        if($entity->canUser('@control')){
-            $this->jsObject['entity']['registrations'] = $entity->allRegistrations ? $entity->allRegistrations : array();    
-        } else {
-            $this->jsObject['entity']['registrations'] = $entity->sentRegistrations ? $entity->sentRegistrations : array();
-        }
-
-=======
         
         $this->jsObject['entity']['registrationCategories'] = $entity->registrationCategories;
         $this->jsObject['entity']['published'] = $entity->publishedRegistrations;
@@ -836,7 +797,6 @@ class Theme extends MapasCulturais\Theme {
         } else {
         $this->jsObject['entity']['registrations'] = $entity->sentRegistrations ? $entity->sentRegistrations : array();
         }
->>>>>>> master
         $this->jsObject['entity']['registrationRulesFile'] = $entity->getFile('rules');
         $this->jsObject['entity']['canUserModifyRegistrationFields'] = $entity->canUser('modifyRegistrationFields');
         $this->jsObject['projectRegistrationsEnabled'] = App::i()->config['app.enableProjectRegistration'];

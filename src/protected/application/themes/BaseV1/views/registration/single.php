@@ -44,11 +44,8 @@ $_params = [
         
         <?php $this->part('singles/registration-single--agents', $_params) ?>
         
-<<<<<<< HEAD
-=======
         <?php $this->part('singles/registration-single--seals', $_params) ?>
         
->>>>>>> master
         <?php $this->part('singles/registration-single--fields', $_params) ?>
 
         <?php $this->applyTemplateHook('form','end'); ?>
