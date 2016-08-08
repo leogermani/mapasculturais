@@ -398,10 +398,10 @@ class App extends \Slim\Slim{
 
         // ===================================== //
 
-        // run plugins
+        /* run plugins
         foreach($config['plugins.enabled'] as $plugin){
             include PLUGINS_PATH.$plugin.'.php';
-        }
+        }*/
         // ===================================== //
 
         if(defined('DB_UPDATES_FILE') && file_exists(DB_UPDATES_FILE))
